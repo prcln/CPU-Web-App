@@ -1,8 +1,9 @@
 {
   "main.css": "static/css/main.28a66978.css",
   "main.css.map": "static/css/main.28a66978.css.map",
-  "main.js": "static/js/main.244d1f6a.js",
-  "main.js.map": "static/js/main.244d1f6a.js.map",
+  "main.js": "static/js/main.f45805dd.js",
+  "main.js.map": "static/js/main.f45805dd.js.map",
   "static\\media\\CPU.png": "static/media/CPU.25ffde69.png",
-  "static\\media\\video.mp4": "static/media/video.03511b56.mp4"
+  "static\\media\\video.mp4": "static/media/video.03511b56.mp4",
+  "static\\media\\web.config": "static/media/web.53a374cc.config"
 }
