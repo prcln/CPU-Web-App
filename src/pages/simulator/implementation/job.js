@@ -1,3 +1,5 @@
+import { t } from "../../../language/i18n";
+
 class Job {
     constructor(ID, arrivalTime, runTime, Memory) {
         this.JobNumber = ID;
@@ -5,7 +7,7 @@ class Job {
         this.Memory = Memory;
         this.NeededRunTime = runTime;
         this.NeededIOBurstTime = 0;
- 
+
         this.RunTime = 0;
         this.IOBurstTime = 0;
         this.SemaphorWaitTime = 0;
@@ -15,6 +17,8 @@ class Job {
 
         this.StartTime = -1;
         this.FinishTime = -1;
+
+        this.stateReason = t("tt_created", ID);
     }
 
     RemainingRunTime() {
@@ -31,7 +35,7 @@ class Job {
 
     WaitIO() {
         this.IOBurstTime++;
-        return (this.IOBurstTime >= this.NeededIOBurstTime) ;
+        return (this.IOBurstTime >= this.NeededIOBurstTime);
     }
 
     WaitSemaphore() {
@@ -42,7 +46,7 @@ class Job {
         if (!this.hasRun) {
             this.hasRun = true;
             this.StartTime = CurrentTime;
-        } 
+        }
 
         this.RunTime++;
 

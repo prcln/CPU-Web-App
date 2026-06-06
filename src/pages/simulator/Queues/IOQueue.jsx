@@ -52,6 +52,15 @@ class IOQueue extends Component {
           defaultPageSize={this.props.Count}
           // style={this.props.style}
           className="-striped -highlight"
+          getTrProps={(state, rowInfo, column) => {
+            if (rowInfo && rowInfo.original) {
+              return {
+                className: 'has-smart-tooltip',
+                'data-tooltip': rowInfo.original.stateReason || ""
+              };
+            }
+            return {};
+          }}
         />
       </div>
       );

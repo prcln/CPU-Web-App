@@ -569,3 +569,42 @@ div.column-B3-B4 {
     border-left-color: rgba(239, 68, 68, 0.7);
   }
 }
+
+/* Smart Tooltip Styles */
+.has-smart-tooltip {
+  cursor: help;
+}
+
+#global-smart-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: fixed;
+  background-color: var(--bg-card, rgba(30, 30, 30, 0.95));
+  color: var(--text-main, #fff);
+  text-align: center;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border-muted, #444);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  font-size: 14px;
+  width: max-content;
+  max-width: 320px;
+  z-index: 999999;
+  transition: opacity 0.15s ease-out;
+  pointer-events: none;
+  font-weight: normal;
+  line-height: 1.4;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+#global-smart-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%; 
+  left: 50%;
+  margin-left: -6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: var(--border-muted, #444) transparent transparent transparent;
+}

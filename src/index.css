@@ -118,6 +118,10 @@ ul.header li a {
 .theme-toggle-li {
   margin-left: auto !important; /* Push toggle to the right */
   padding-right: 20px;
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }
 
 .theme-toggle-btn {

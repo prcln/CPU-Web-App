@@ -72,6 +72,15 @@ class FinishedJobQueue extends Component {
             height: "420px" // This will force the table body to overflow and scroll, since there is not enough room
           }}
           className="-striped -highlight"
+          getTrProps={(state, rowInfo, column) => {
+            if (rowInfo && rowInfo.original) {
+              return {
+                className: 'has-smart-tooltip',
+                'data-tooltip': rowInfo.original.stateReason || ""
+              };
+            }
+            return {};
+          }}
         />
       </div>
       );

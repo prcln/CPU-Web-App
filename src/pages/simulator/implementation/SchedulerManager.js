@@ -1,4 +1,5 @@
-import Job from "./job";
+import Job from "./Job";
+import { t } from "../../../language/i18n";
 import CPU from "./cpu";
 import WaitQueueIO from "./WaitQueueIO";
 import Event from "./Event";
@@ -22,17 +23,19 @@ export class SchedulerManager {
         this.PermEventListOBJ = [];
         this.IncomingJobsQueue = [];
         this.RejectedJobsQueue = [];
-        this.ReadyQueueI= [];
-        this.ReadyQueueII= [];
+        this.ReadyQueueI = [];
+        this.ReadyQueueII = [];
         this.WaitQueueIO = new WaitQueueIO();
         this.CPU = new CPU();
-        this.FinishedQueue= [];
-        this.S=[1,1,1,1,1];
-        this.WaitQueueS = [[],[],[],[],[]];
-        
+        this.FinishedQueue = [];
+        this.S = [1, 1, 1, 1, 1];
+        this.WaitQueueS = [[], [], [], [], []];
+
         // Deadlock tracking fields
         this.SemaphoreOwner = [null, null, null, null, null];
         this.DeadlockInfo = { deadlocked: false };
+
+        this.alerts = [];
 
         this.Run = this.Run.bind(this);
         this.ReadText = this.ReadText.bind(this);
@@ -50,17 +53,19 @@ export class SchedulerManager {
         this.FreeMemory = this.Memory;
         this.IncomingJobsQueue = [];
         this.RejectedJobsQueue = [];
-        this.ReadyQueueI= [];
-        this.ReadyQueueII= [];
+        this.ReadyQueueI = [];
+        this.ReadyQueueII = [];
         this.WaitQueueIO = new WaitQueueIO();
         this.CPU = new CPU();
-        this.FinishedQueue= [];
-        this.S=[1,1,1,1,1];
-        this.WaitQueueS = [[],[],[],[],[]];
-        
+        this.FinishedQueue = [];
+        this.S = [1, 1, 1, 1, 1];
+        this.WaitQueueS = [[], [], [], [], []];
+
         // Reset deadlock tracking fields
         this.SemaphoreOwner = [null, null, null, null, null];
         this.DeadlockInfo = { deadlocked: false };
+
+        this.alerts = [];
 
         this.EventListOBJ = [];
         this.PermEventListOBJ.forEach(element => {
@@ -73,22 +78,29 @@ export class SchedulerManager {
         this.ignorealerts = value;
     }
 
+    triggerAlert(msg) {
+        if (!this.ignorealerts) {
+            this.alertIdCounter = (this.alertIdCounter || 0) + 1;
+            this.alerts.push({ id: this.alertIdCounter, message: msg, time: this.CurrentTime });
+        }
+    }
+
     ReadText(text) {
         this.Reset()
         var nEventListOBJ = [];
         var nEventListOBJCopy = [];
         var lines = text.split('\n');
-        for(var line = 0; line < lines.length; line++) {
+        for (var line = 0; line < lines.length; line++) {
             // Skip blank or whitespace-only lines
             if (!lines[line].trim()) continue;
             var newEvent = new Event(lines[line]);
             if (newEvent.type !== 'X') {
                 nEventListOBJCopy.push(newEvent);
-                nEventListOBJ.push(newEvent);  
+                nEventListOBJ.push(newEvent);
             }
         }
 
-        nEventListOBJ.sort(function(a,b){
+        nEventListOBJ.sort(function (a, b) {
             if (a.arrivalTime > b.arrivalTime) {
                 return 1;
             }
@@ -108,41 +120,39 @@ export class SchedulerManager {
     }
 
     CheckEventQueue() {
-        if(this.EventListOBJ.length > 0 && this.EventListOBJ[0].arrivalTime === this.CurrentTime) 
-        {
+        if (this.EventListOBJ.length > 0 && this.EventListOBJ[0].arrivalTime === this.CurrentTime) {
             var newEvent = this.EventListOBJ.shift();
             this.lastArrivalTime = this.currentArrivalTime;
             this.currentArrivalTime = newEvent.arrivalTime;
             // console.log(newEvent);
 
             if (newEvent.type === 'A') {
-                if(newEvent.memory > this.Memory) {
-                    this.RejectedJobsQueue.push(new Job(
-                        newEvent.number, 
-                        newEvent.arrivalTime, 
-                        newEvent.runtime, 
-                        newEvent.memory));
-                    console.log("Rejected Job " + newEvent.number + 
+                if (newEvent.memory > this.Memory) {
+                    const rejectedJob = new Job(
+                        newEvent.number,
+                        newEvent.arrivalTime,
+                        newEvent.runtime,
+                        newEvent.memory);
+                    rejectedJob.stateReason = t("tt_rejected", newEvent.number, newEvent.memory, this.Memory);
+                    this.RejectedJobsQueue.push(rejectedJob);
+                    console.log("Rejected Job " + newEvent.number +
                         " requiring " + newEvent.memory + " memory");
-                    if(!this.ignorealerts) {
-                        alert(`The system rejected job ${newEvent.number} for requiring ${newEvent.memory} units of memory. The maximum memory is ${this.Memory} units.`);
-                    }
+                    this.triggerAlert(`The system rejected job ${newEvent.number} for requiring ${newEvent.memory} units of memory. The maximum memory is ${this.Memory} units.`);
                     return true;
                 }
                 this.IncomingJobsQueue.push(new Job(
-                    newEvent.number, 
-                    newEvent.arrivalTime, 
-                    newEvent.runtime, 
+                    newEvent.number,
+                    newEvent.arrivalTime,
+                    newEvent.runtime,
                     newEvent.memory));
             }
             else if (newEvent.type === 'I') {
                 if (this.CPU.idle) {
                     console.log("I/O Wait Event but CPU was Idle at time: " + this.CurrentTime);
-                    if(!this.ignorealerts) {
-                        alert("An event occurred that effects the current running process but the CPU was idle.");
-                    }
+                    this.triggerAlert("An event occurred that effects the current running process but the CPU was idle.");
                 }
                 var IOJob = this.CPU.job;
+                IOJob.stateReason = t("tt_io_wait", IOJob.JobNumber, newEvent.burstTime);
                 this.WaitQueueIO.AddJob(IOJob, newEvent.burstTime);
                 this.CPU.idle = true;
                 this.RunScheduling();
@@ -150,13 +160,12 @@ export class SchedulerManager {
             else if (newEvent.type === 'S') {
                 if (newEvent.semaphore < 0 || newEvent.semaphore > 4) {
                     console.log("Semaphore " + newEvent.semaphore + " does not exist.");
-                    if(!this.ignorealerts) {
-                        alert("Semaphore " + newEvent.semaphore + " does not exist.");
-                    }
+                    this.triggerAlert("Semaphore " + newEvent.semaphore + " does not exist.");
                 }
-                else  {
-                    if(this.WaitQueueS[newEvent.semaphore].length > 0) {
+                else {
+                    if (this.WaitQueueS[newEvent.semaphore].length > 0) {
                         var nextJob = this.WaitQueueS[newEvent.semaphore].shift();
+                        nextJob.stateReason = t("tt_sem_done", nextJob.JobNumber, newEvent.semaphore);
                         this.ReadyQueueI.push(nextJob);
                         this.SemaphoreOwner[newEvent.semaphore] = nextJob.JobNumber;
                     } else {
@@ -168,11 +177,9 @@ export class SchedulerManager {
             else if (newEvent.type === 'W') {
                 if (newEvent.semaphore < 0 || newEvent.semaphore > 4) {
                     console.log("Semaphore " + newEvent.semaphore + " does not exist.");
-                    if(!this.ignorealerts) {
-                        alert("Semaphore " + newEvent.semaphore + " does not exist.");
-                    }
+                    this.triggerAlert("Semaphore " + newEvent.semaphore + " does not exist.");
                 }
-                else  {
+                else {
                     // Only process W event if a job is actually running
                     if (this.CPU.idle || !this.CPU.job) {
                         console.log("W event at time " + this.CurrentTime + " but CPU is idle — skipping.");
@@ -182,6 +189,7 @@ export class SchedulerManager {
                     }
                     else {
                         // Block the currently running job
+                        this.CPU.job.stateReason = t("tt_sem_wait", this.CPU.job.JobNumber, newEvent.semaphore);
                         this.WaitQueueS[newEvent.semaphore].push(this.CPU.job);
                         this.CPU.idle = true;
                         this.RunScheduling();
@@ -202,14 +210,19 @@ export class SchedulerManager {
         while (this.IncomingJobsQueue.length > 0 && this.IncomingJobsQueue[0].Memory <= this.FreeMemory) {
             var job = this.IncomingJobsQueue.shift();
             this.FreeMemory = this.FreeMemory - job.Memory;
+            job.stateReason = t("tt_loaded", job.JobNumber);
             this.ReadyQueueI.push(job);
         }
         if (this.CPU.idle) {
             if (this.ReadyQueueI.length > 0) {
-                this.CPU.AddJob(this.ReadyQueueI.shift(), this.quantum1); 
+                var jobI = this.ReadyQueueI.shift();
+                jobI.stateReason = t("tt_run_q1", jobI.JobNumber, this.quantum1);
+                this.CPU.AddJob(jobI, this.quantum1);
             }
             else if (this.ReadyQueueII.length > 0) {
-                this.CPU.AddJob(this.ReadyQueueII.shift(), this.quantum2);
+                var jobII = this.ReadyQueueII.shift();
+                jobII.stateReason = t("tt_run_q2", jobII.JobNumber, this.quantum2);
+                this.CPU.AddJob(jobII, this.quantum2);
             }
         }
     }
@@ -220,13 +233,14 @@ export class SchedulerManager {
             this.CurrentTime++;
 
             // Handle All Events
-            while( this.CheckEventQueue() ){}
+            while (this.CheckEventQueue()) { }
             // Run CPU and IO
-            if(this.CPU.Run(this.CurrentTime)) {
-                if(this.CPU.job.Done) {
+            if (this.CPU.Run(this.CurrentTime)) {
+                if (this.CPU.job.Done) {
+                    this.CPU.job.stateReason = t("tt_finished", this.CPU.job.JobNumber);
                     this.FinishedQueue.push(this.CPU.job);
                     this.FreeMemory += this.CPU.job.Memory;
-                    
+
                     // Release all owned semaphores when job terminates
                     for (let s = 0; s < 5; s++) {
                         if (this.SemaphoreOwner[s] === this.CPU.job.JobNumber) {
@@ -235,6 +249,7 @@ export class SchedulerManager {
                     }
                 }
                 else {
+                    this.CPU.job.stateReason = t("tt_demoted", this.CPU.job.JobNumber);
                     this.ReadyQueueII.push(this.CPU.job);
                 }
                 this.lastArrivalTime = this.currentArrivalTime;
@@ -246,21 +261,23 @@ export class SchedulerManager {
                 this.currentArrivalTime = this.CurrentTime;
             }
             jobs.forEach(job => {
+                job.stateReason = t("tt_io_done", job.JobNumber);
                 this.ReadyQueueI.push(job);
             });
             // Run Scheduling
             this.RunScheduling();
-            
+
             // Check for deadlocks at each simulation cycle
             var newDeadlockInfo = this.DetectDeadlock();
             if (newDeadlockInfo.deadlocked && !this.DeadlockInfo.deadlocked) {
-                if (!this.ignorealerts) {
-                    var jobList = newDeadlockInfo.cycle
-                        .filter(node => node.type === 'job')
-                        .map(node => "Job " + node.id)
-                        .join(", ");
-                    alert("Cảnh báo: Phát hiện bế tắc (Deadlock) giữa các tiến trình: " + jobList);
-                }
+                var jobList = newDeadlockInfo.cycle
+                    .filter(node => node.type === 'job')
+                    .map(node => "Job " + node.id)
+                    .join(", ");
+                this.triggerAlert("Cảnh báo: Phát hiện bế tắc (Deadlock) giữa các tiến trình: " + jobList);
+                newDeadlockInfo.time = this.CurrentTime;
+            } else if (newDeadlockInfo.deadlocked && this.DeadlockInfo.deadlocked) {
+                newDeadlockInfo.time = this.DeadlockInfo.time;
             }
             this.DeadlockInfo = newDeadlockInfo;
         }

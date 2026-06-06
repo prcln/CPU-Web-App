@@ -5,11 +5,11 @@ import "./Queues.css";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 
-class SmallJobQueue extends Component {
+class LargeJobQueue extends Component {
     render() {
       const header1 = this.props.process ? "Process #" : "Job #";
       return (
-        // <div className="">
+        <div className="">
           <ReactTable 
             resizable={false}
             sortable={false}
@@ -21,15 +21,13 @@ class SmallJobQueue extends Component {
                 {
                   Header: header1,
                   accessor: "JobNumber",
-                  minWidth: 100,
-                  maxWidth: 100
+                  minWidth: 100
                 },
                 {
                   Header: "Memory (M)",
-                  id: "Memory",
-                  accessor: d => d.Memory,
-                  minWidth: 120,
-                  maxWidth: 120
+                  id: "memory",
+                  accessor: "Memory",
+                  minWidth: 120
                 },
                 {
                     Header: "Run Time (R)",
@@ -45,19 +43,28 @@ class SmallJobQueue extends Component {
         //       desc: false
         //     }
         //   ]}
-          defaultPageSize={3}
-          // style={{
-          //    height: "175px" // This will force the table body to overflow and scroll, since there is not enough room
-          // }}
+          defaultPageSize={10}
+          style={{
+            height: "420px" // This will force the table body to overflow and scroll, since there is not enough room
+          }}
           className="-striped -highlight"
+          getTrProps={(state, rowInfo, column) => {
+            if (rowInfo && rowInfo.original) {
+              return {
+                className: 'has-smart-tooltip',
+                'data-tooltip': rowInfo.original.stateReason || ""
+              };
+            }
+            return {};
+          }}
         />
-      /* </div> */
+      </div>
       );
     }
   }
 
-  export default SmallJobQueue;
+  export default LargeJobQueue;
 
 
 // WEBPACK FOOTER //
-// ./src/pages/simulator/Queues/SmallJobQueue.js
+// ./src/pages/simulator/Queues/LargeJobQueue.js

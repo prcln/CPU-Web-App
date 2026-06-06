@@ -1,5 +1,6 @@
 import React from "react";
 import "./Settings.css"
+import { t } from "../../../language/i18n";
 
 export class Settings extends React.Component {
     constructor(props) {
@@ -136,76 +137,76 @@ export class Settings extends React.Component {
         return (
             <div className="modal">
                 <div className="modal-content">
-                    <h2 className="fixed-big"><center>Settings</center></h2>
+                    <h2 className="fixed-big"><center>{t("settings_title")}</center></h2>
 
                     <div className="SettingsRow">
-                        <h2 className="SettingsFixed"><center>Max Memory: </center></h2>
+                        <h2 className="SettingsFixed"><center>{t("settings_max_memory")}</center></h2>
                         <input className="SettingsInput" type="number"
                             value={this.state.memory} onSubmit={this.setMemory.bind(this)} onChange={this.updateMemory.bind(this)}
                         />
                     </div>
                     <div className="SettingsRow">
-                        <h2 className="SettingsFixed"><center>Quantum 1: </center></h2>
+                        <h2 className="SettingsFixed"><center>{t("settings_quantum_1")}</center></h2>
                         <input className="SettingsInput" type="number"
                             value={this.state.quantum1} onChange={this.updateQuantum1.bind(this)}
                         />
                     </div>
                     <div className="SettingsRow">
-                        <h2 className="SettingsFixed"><center>Quantum 2: </center></h2>
+                        <h2 className="SettingsFixed"><center>{t("settings_quantum_2")}</center></h2>
                         <input className="SettingsInput" type="number"
                             value={this.state.quantum2} onChange={this.updateQuantum2.bind(this)}
                         />
                     </div>
                     <div className="SettingsRow">
-                        <h2 className="SettingsFixed"><center>Semaphore 1: </center></h2>
+                        <h2 className="SettingsFixed"><center>{t("settings_sem_1")}</center></h2>
                         <input className="SettingsInput" type="number"
                             value={this.state.semaphores[0]} onChange={this.updateSemaphore1.bind(this)}
                         />
                     </div>
                     <div className="SettingsRow">
-                        <h2 className="SettingsFixed"><center>Semaphore 2: </center></h2>
+                        <h2 className="SettingsFixed"><center>{t("settings_sem_2")}</center></h2>
                         <input className="SettingsInput" type="number"
                             value={this.state.semaphores[1]} onChange={this.updateSemaphore2.bind(this)}
                         />
                     </div>
                     <div className="SettingsRow">
-                        <h2 className="SettingsFixed"><center>Semaphore 3: </center></h2>
+                        <h2 className="SettingsFixed"><center>{t("settings_sem_3")}</center></h2>
                         <input className="SettingsInput" type="number"
                             value={this.state.semaphores[2]} onChange={this.updateSemaphore3.bind(this)}
                         />
                     </div>
                     <div className="SettingsRow">
-                        <h2 className="SettingsFixed"><center>Semaphore 4: </center></h2>
+                        <h2 className="SettingsFixed"><center>{t("settings_sem_4")}</center></h2>
                         <input className="SettingsInput" type="number"
                             value={this.state.semaphores[3]} onChange={this.updateSemaphore4.bind(this)}
                         />
                     </div>
                     <div className="SettingsRow">
-                        <h2 className="SettingsFixed"><center >Semaphore 5: </center></h2>
+                        <h2 className="SettingsFixed"><center>{t("settings_sem_5")}</center></h2>
                         <input className="SettingsInput" type="number"
                             value={this.state.semaphores[4]} onChange={this.updateSemaphore5.bind(this)}
                         />
                     </div>
 
                     <div className="SettingsRow">
-                        <h2 className="SettingsFixed"><center>Choose Scenario: </center></h2>
+                        <h2 className="SettingsFixed"><center>{t("settings_choose_scenario")}</center></h2>
                         <div className="dropdown">
-                            <button onClick={this.myFunction.bind(this)} className="SettingsButton">{this.state.scenarioName}</button>
+                            <button onClick={this.myFunction.bind(this)} className="SettingsButton">{t(this.state.scenarioName)}</button>
                             <div id="myDropdown" className="dropdown-content">
                                 <button onClick={this.setScenarioA.bind(this)}>
-                                    Scenario A
+                                    {t("settings_scenario_a")}
                                 </button>
                                 <button onClick={this.setScenarioB.bind(this)}>
-                                    Scenario B
+                                    {t("settings_scenario_b")}
                                 </button>
                                 <button onClick={this.setScenarioC.bind(this)}>
-                                    Scenario C
+                                    {t("settings_scenario_c")}
                                 </button>
                                 <button onClick={this.setScenarioD.bind(this)}>
-                                    Scenario D
+                                    {t("settings_scenario_d")}
                                 </button>
                                 <div className="upload-btn-wrapper">
-                                    <button> Choose File </button>
+                                    <button> {t("settings_choose_file")} </button>
                                     <input type="file"
                                         name="myFile"
                                         onChange={this.setFile.bind(this)}
@@ -221,12 +222,12 @@ export class Settings extends React.Component {
                     <div className="row">
                         <div className="centered">
                             <button className="SettingsButton" onClick={this.handleClick.bind(this)}>
-                                Save
+                                {t("settings_save")}
                             </button>
                         </div>
                         <div className="centered">
                             <button className="SettingsButton" onClick={this.closeSettings.bind(this)}>
-                                Close
+                                {t("settings_close")}
                             </button>
                         </div>
                     </div>

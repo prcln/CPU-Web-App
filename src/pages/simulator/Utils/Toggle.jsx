@@ -29,7 +29,7 @@ export class Toggle extends React.Component {
     render() {
       return (
         <button className="ToggleBigFont" onClick={this.handleClick}>
-          {this.state.isToggleOn ? this.OnTxt : this.OffTxt}
+          {this.state.isToggleOn ? this.props.on : this.props.off}
         </button>
       );
     }
@@ -58,8 +58,8 @@ export class HandleToggle extends React.Component {
   
   render() {
     return (
-      <button className={this.className} onClick={this.handleClick}>
-        {this.state.isToggleOn ? this.OnTxt : this.OffTxt}
+      <button className={this.props.className} onClick={this.handleClick}>
+        {this.state.isToggleOn ? this.props.on : this.props.off}
       </button>
     );
   }

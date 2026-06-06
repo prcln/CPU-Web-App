@@ -1,1 +1,22 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>An Interactive, Graphical Simulator for Teaching Operating Systems</title><link href="/static/css/main.b7d103f8.css" rel="stylesheet"></head><body><div id="root"></div><script type="text/javascript" src="/static/js/main.f081cda4.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>An Interactive, Graphical Simulator for Teaching Operating Systems</title>
+    <script>
+      /* Polyfill process global for dependencies that reference process.env */
+      if (typeof window.process === 'undefined') {
+        window.process = { env: { NODE_ENV: 'development' } };
+      }
+    </script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/index.jsx"></script>
+  </body>
+</html>
