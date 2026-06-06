@@ -1,0 +1,166 @@
+
+
+div.SettingsRow {
+    height: 50px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row;
+}
+
+/* .SettingsCentered {
+    width: 50%;
+    display: block;
+    text-align: -webkit-center;
+} */
+
+input.SettingsInput {
+    -ms-flex: 1 1;
+        flex: 1 1;
+    max-width: 150px;
+    padding-top: 5px;
+    width: 100%;
+    padding-right: 5px;
+    line-height: 25px;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border-muted);
+    border-radius: 4px;
+    z-index: 2;
+    margin: 5px;
+}
+
+button.SettingsButton {
+    -ms-flex-order: 2;
+        order: 2;
+    font-weight: bold;
+    font-size: 20px;
+    min-width: 100px;
+    width: 100%;
+    height: 40px;
+    color: var(--btn-text);
+    background-color: var(--btn-bg);
+    border: 1px solid var(--border-muted);
+    border-radius: 4px;
+    -ms-flex-positive: 100;
+        flex-grow: 100;
+    margin: 5px;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+h2.SettingsFixed {
+    width: 50%;
+    font-size: 20px;
+}
+
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+
+    font-weight: bold;
+    font-size: 20px;
+    /* min-width: 100px; */
+    /* width: 100%; */
+    /* height: 40px; */
+    /* padding-right: 5px; */
+    color: rgb(44, 72, 112);
+
+
+}
+  
+.upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.centered {
+      -ms-flex-line-pack: center;
+          align-content: center;
+      -ms-flex-align: center;
+          align-items: center;
+      display: -ms-flexbox;
+      display: flex;
+      width: 100%;
+}
+
+/* Dropdown Button */
+.dropbtn {
+    /* background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer; */
+    font-weight: bold;
+    font-size: 20px;
+    min-width: 100px;
+    /* width: 285px; */
+    height: 40px;
+    /* padding-right: 5px; */
+    color: rgb(44, 72, 112);
+    -ms-flex-positive: 100;
+        flex-grow: 100;
+    margin: 5px;
+  }
+  
+  /* Dropdown button on hover & focus */
+  .SettingsButton:hover, .SettingsButton:focus {
+    background-color: var(--btn-hover);
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    width: 160px;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--modal-bg);
+    width: 170px;
+    border: 1px solid var(--border-muted);
+    box-shadow: 0px 8px 16px 0px var(--shadow);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content button {
+    text-decoration: none;
+    display: block;
+    -ms-flex-order: 2;
+        order: 2;
+    font-weight: bold;
+    font-size: 20px;
+    min-width: 100px;
+    width: 160px;
+    height: 40px;
+    color: var(--btn-text);
+    background-color: var(--btn-bg);
+    border: 1px solid var(--border-muted);
+    border-radius: 4px;
+    -ms-flex-positive: 100;
+        flex-grow: 100;
+    margin: 5px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .dropdown-content button:hover {
+    background-color: var(--btn-hover);
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #ddd}
+  
+  /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+  .show {display:block;}

@@ -1,0 +1,28 @@
+input.TimeInput {
+    -ms-flex: 1 1;
+        flex: 1 1;
+    width: 150px;
+    height: 34px;
+    padding-right: 5px;
+    line-height: 25px;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border-muted);
+    border-radius: 4px;
+    z-index: 2;
+}
+
+h2.fixed-TB {
+    display: inline;
+    font-size: 25px;
+    font-weight: bold;
+    color: var(--text-main);
+}
+
+label.pad {
+    padding-right: 10px;
+    z-index: 2;
+}

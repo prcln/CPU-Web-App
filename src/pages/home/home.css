@@ -1,0 +1,7 @@
+
+div.backdrop {
+    background-color: rgba(250, 250, 250, 1);
+    /* min-width: 1240px; */
+    /* max-height: 960px; */
+    padding: 20px;
+}
