@@ -1,4 +1,4 @@
-import Job from "./Job";
+import Job from "./job";
 import { t } from "../../../language/i18n";
 import CPU from "./cpu";
 import WaitQueueIO from "./WaitQueueIO";
