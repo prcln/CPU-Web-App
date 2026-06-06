@@ -51,6 +51,13 @@ class SmallJobQueue extends Component {
         //    height: "175px" // This will force the table body to overflow and scroll, since there is not enough room
         // }}
         className="-striped -highlight"
+        previousText={t("table_prev")}
+        nextText={t("table_next")}
+        loadingText={t("table_loading")}
+        noDataText={t("table_nodata")}
+        pageText={t("table_page")}
+        ofText={t("table_of")}
+        rowsText={t("table_rows")}
         getTrProps={(state, rowInfo, column) => {
           if (rowInfo && rowInfo.original) {
             return {

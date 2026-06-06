@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { t } from "../../../language/i18n";
 import "./Queues.css";
  
 // Import React Table
@@ -7,7 +8,7 @@ import "react-table/react-table.css";
 
 class IOQueue extends Component {
     render() {
-      const header1 = this.props.process ? "Process #" : "Job #";
+      const header1 = this.props.process ? t("th_process") : t("th_job");
       return (
         <div className="">
           <ReactTable 
@@ -24,19 +25,19 @@ class IOQueue extends Component {
                   minWidth: 100
                 },
                 {
-                  Header: "Burst (B)",
+                  Header: t("th_burst"),
                   id: "IOBurst",
                   accessor: d => (d.NeededIOBurstTime - d.IOBurstTime),
                   minWidth: 100
                 },
                 {
-                  Header: "Memory (M)",
+                  Header: t("th_memory"),
                   id: "memory",
                   accessor: d => d.Memory,
                   minWidth: 120
                 },
                 {
-                  Header: "Run Time (R)",
+                  Header: t("th_runtime"),
                   id: "Runtime",
                   accessor: d => (d.NeededRunTime - d.RunTime),
                   minWidth: 120
@@ -52,6 +53,13 @@ class IOQueue extends Component {
           defaultPageSize={this.props.Count}
           // style={this.props.style}
           className="-striped -highlight"
+          previousText={t("table_prev")}
+          nextText={t("table_next")}
+          loadingText={t("table_loading")}
+          noDataText={t("table_nodata")}
+          pageText={t("table_page")}
+          ofText={t("table_of")}
+          rowsText={t("table_rows")}
           getTrProps={(state, rowInfo, column) => {
             if (rowInfo && rowInfo.original) {
               return {

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { t } from "../../../language/i18n";
 import "./Queues.css";
  
 // Import React Table
@@ -39,20 +40,20 @@ class EventQueue extends Component {
             data={this.props.data}
             columns={[
                 {
-                  Header: "Type",
+                  Header: t("th_type"),
                   accessor: "type",
                   minWidth: 60,
                   maxWidth: 60
                 },
                 {
-                  Header: "Arrival",
+                  Header: t("th_arrival"),
                   id: "arrivalTime",
                   accessor: d => d.arrivalTime,
                   minWidth: 80,
                   maxWidth: 80
                 },
                 {
-                    Header: "Details",
+                    Header: t("th_details"),
                     id: "details",
                     accessor: d => d.description,
                     minWidth: 220
@@ -71,6 +72,13 @@ class EventQueue extends Component {
             height: "420px" // This will force the table body to overflow and scroll, since there is not enough room
           }}
           className="-striped -highlight"
+          previousText={t("table_prev")}
+          nextText={t("table_next")}
+          loadingText={t("table_loading")}
+          noDataText={t("table_nodata")}
+          pageText={t("table_page")}
+          ofText={t("table_of")}
+          rowsText={t("table_rows")}
         />
       // </div>
       );

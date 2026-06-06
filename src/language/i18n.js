@@ -56,6 +56,15 @@ const translations = {
     "th_arrival": "Arrival (A)",
     "th_burst": "Burst (B)",
     "th_finished": "Finished (F)",
+    "th_type": "Type",
+    "th_details": "Details",
+    "table_prev": "Previous",
+    "table_next": "Next",
+    "table_loading": "Loading...",
+    "table_nodata": "No rows found",
+    "table_page": "Page",
+    "table_of": "of",
+    "table_rows": "rows",
 
     // Tooltips
     "tt_created": "Process P{0} was created and is waiting to be loaded into memory.",
@@ -174,6 +183,15 @@ const translations = {
     "th_arrival": "Thời điểm tới",
     "th_burst": "Thời gian I/O",
     "th_finished": "Lúc xong",
+    "th_type": "Loại",
+    "th_details": "Chi tiết",
+    "table_prev": "Trang trước",
+    "table_next": "Trang sau",
+    "table_loading": "Đang tải...",
+    "table_nodata": "Không có dữ liệu",
+    "table_page": "Trang",
+    "table_of": "/",
+    "table_rows": "dòng",
 
     // Tooltips
     "tt_created": "Tiến trình P{0} mới được tạo và đang chờ nạp vào bộ nhớ.",
