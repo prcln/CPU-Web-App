@@ -10,7 +10,7 @@
     "react-table": "^6.10.3"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.0",
+    "@vitejs/plugin-react": "^6.0.2",
     "vite": "^8.0.16"
   },
   "scripts": {
