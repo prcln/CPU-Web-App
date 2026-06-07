@@ -91,7 +91,7 @@ class SimHeader extends Component {
         this.nextEvent = this.nextEvent.bind(this);
         this.ShowSettings = this.ShowSettings.bind(this);
 
-        this.state = { isAutoRunning: false, autoRunDelay: 1000 };
+        this.state = { isAutoRunning: false, autoRunDelay: 1000, sliderValue: undefined, isDragging: false, dragDomain: null };
         this.toggleAutoRun = this.toggleAutoRun.bind(this);
         this.updateAutoRunDelay = this.updateAutoRunDelay.bind(this);
     }
@@ -164,24 +164,24 @@ class SimHeader extends Component {
     }
 
     SliderUpdatedTime(timeArr) {
-        var time = timeArr[0]
-        // if (time < 0) {
-        //     time = 0;
-        // }
-        // if (time > 30000) {
-        //     time = 30000;
-        // }
+        var time = timeArr[0];
+        this.setState(prevState => ({
+            sliderValue: time,
+            isDragging: true,
+            dragDomain: prevState.isDragging ? prevState.dragDomain : [this.time - 250, this.time + 250]
+        }));
         this.TimeForm.UpdateTime(time);
     }
 
     SliderChangedTime(timeArr) {
-        var time = timeArr[0]
+        var time = timeArr[0];
         if (time < 0) {
             time = this.time === 0 ? 1 : 0;
         }
         if (time > 30000) {
             time = 30000;
         }
+        this.setState({ sliderValue: undefined, isDragging: false, dragDomain: null });
         this.TimeChanged(time);
         this.TimeForm.UpdateTime(time);
     }
@@ -315,8 +315,8 @@ class SimHeader extends Component {
                     <div className="header-column-eight">
 
                         <Slider rootStyle={sliderStyle}
-                            domain={[this.time - 250, this.time + 250]}
-                            values={[this.time]} step={1} mode={2}
+                            domain={this.state.isDragging && this.state.dragDomain ? this.state.dragDomain : [this.time - 250, this.time + 250]}
+                            values={[this.state.sliderValue !== undefined ? this.state.sliderValue : this.time]} step={1} mode={2}
                             onChange={this.SliderChangedTime}
                             onUpdate={this.SliderUpdatedTime} >
                             <div style={railStyle} />
