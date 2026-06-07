@@ -123,7 +123,7 @@ class Simulator extends Component {
         let text = target.getAttribute('data-tooltip');
         // fallback for CPU element which used a child div before
         if (!text && target.classList.contains('CPU')) {
-          text = manager.CPU.job ? (manager.CPU.job.stateReason || "Tiến trình đang được thực thi trên CPU.") : "";
+          text = manager.CPU.job ? (manager.CPU.job.stateReason || t("tt_cpu_running")) : "";
         }
 
         if (text) {
@@ -472,10 +472,10 @@ class Simulator extends Component {
 
           {/* Toast Container */}
           <div style={{ position: 'fixed', top: '20px', right: '20px', zIndex: 9999, display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {this.state.toasts && this.state.toasts.map(t => (
-              <div key={t.id} style={{ background: '#dc3545', color: 'white', padding: '15px 20px', borderRadius: '5px', boxShadow: '0 4px 12px rgba(0,0,0,0.3)', width: '300px', fontSize: '15px' }}>
-                <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>⚠️ Alert [Time: {t.time}]</div>
-                <div>{t.message}</div>
+            {this.state.toasts && this.state.toasts.map(t_alert => (
+              <div key={t_alert.id} style={{ background: '#dc3545', color: 'white', padding: '15px 20px', borderRadius: '5px', boxShadow: '0 4px 12px rgba(0,0,0,0.3)', width: '300px', fontSize: '15px' }}>
+                <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>⚠️ {t("alert_title")} {t("alert_time", t_alert.time)}</div>
+                <div>{t_alert.message}</div>
               </div>
             ))}
           </div>

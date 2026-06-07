@@ -13,7 +13,7 @@ const translations = {
     "theme_light": "☀️ Light",
 
     // SimHeader
-    "btn_log": "📋 Log",
+    "btn_log": "Log",
     "toggle_hide_sem": "Hide Semaphore Queues",
     "toggle_show_sem": "Show Semaphore Queues",
     "toggle_disable_alerts": "Disable Alerts",
@@ -81,10 +81,15 @@ const translations = {
     "tt_cpu_running": "Process is running on CPU.",
 
     // Alerts Modal
-    "alert_log": "📋 Alert Log",
+    "alert_log": "Alert Log",
     "alert_no_alerts": "No alerts have been recorded yet.",
     "alert_clear": "Clear Log",
     "alert_time": "[Time: {0}]",
+    "alert_title": "Alert",
+    "alert_rejected": "The system rejected job {0} for requiring {1} units of memory. The maximum memory is {2} units.",
+    "alert_idle_cpu": "An event occurred that affects the current running process but the CPU was idle.",
+    "alert_no_semaphore": "Semaphore {0} does not exist.",
+    "alert_deadlock": "Warning: Deadlock detected among processes: {0}",
 
     // Settings
     "settings_title": "Settings",
@@ -140,7 +145,7 @@ const translations = {
     "theme_light": "☀️ Sáng",
 
     // SimHeader
-    "btn_log": "📋 Nhật ký",
+    "btn_log": "Nhật ký",
     "toggle_hide_sem": "Ẩn Hàng đợi Semaphore",
     "toggle_show_sem": "Hiện Hàng đợi Semaphore",
     "toggle_disable_alerts": "Tắt Cảnh báo",
@@ -208,10 +213,15 @@ const translations = {
     "tt_cpu_running": "Tiến trình đang được thực thi trên CPU.",
 
     // Alerts Modal
-    "alert_log": "📋 Nhật ký Hệ thống",
+    "alert_log": "Nhật ký Hệ thống",
     "alert_no_alerts": "Chưa có cảnh báo nào được ghi nhận.",
     "alert_clear": "Xóa Nhật ký",
     "alert_time": "[T={0}]",
+    "alert_title": "Cảnh báo",
+    "alert_rejected": "Hệ thống từ chối công việc {0} vì yêu cầu {1} đơn vị bộ nhớ. Bộ nhớ tối đa là {2} đơn vị.",
+    "alert_idle_cpu": "Có sự kiện tác động đến tiến trình đang chạy nhưng CPU lại đang rảnh rỗi.",
+    "alert_no_semaphore": "Semaphore {0} không tồn tại.",
+    "alert_deadlock": "Cảnh báo: Phát hiện bế tắc (Deadlock) giữa các tiến trình: {0}",
 
     // Settings
     "settings_title": "Cài đặt Hệ thống",

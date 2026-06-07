@@ -282,6 +282,7 @@ class SimHeader extends Component {
                                             textAlign: 'center',
                                             border: 'none',
                                             color: 'inherit',
+                                            backgroundColor: 'transparent',
                                             outline: '5px',
                                             borderRadius: '4px',
                                             fontWeight: 'bold'

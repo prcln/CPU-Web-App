@@ -137,7 +137,7 @@ export class SchedulerManager {
                     this.RejectedJobsQueue.push(rejectedJob);
                     console.log("Rejected Job " + newEvent.number +
                         " requiring " + newEvent.memory + " memory");
-                    this.triggerAlert(`The system rejected job ${newEvent.number} for requiring ${newEvent.memory} units of memory. The maximum memory is ${this.Memory} units.`);
+                    this.triggerAlert(t("alert_rejected", newEvent.number, newEvent.memory, this.Memory));
                     return true;
                 }
                 this.IncomingJobsQueue.push(new Job(
@@ -149,7 +149,7 @@ export class SchedulerManager {
             else if (newEvent.type === 'I') {
                 if (this.CPU.idle) {
                     console.log("I/O Wait Event but CPU was Idle at time: " + this.CurrentTime);
-                    this.triggerAlert("An event occurred that effects the current running process but the CPU was idle.");
+                    this.triggerAlert(t("alert_idle_cpu"));
                 }
                 var IOJob = this.CPU.job;
                 IOJob.stateReason = t("tt_io_wait", IOJob.JobNumber, newEvent.burstTime);
@@ -160,7 +160,7 @@ export class SchedulerManager {
             else if (newEvent.type === 'S') {
                 if (newEvent.semaphore < 0 || newEvent.semaphore > 4) {
                     console.log("Semaphore " + newEvent.semaphore + " does not exist.");
-                    this.triggerAlert("Semaphore " + newEvent.semaphore + " does not exist.");
+                    this.triggerAlert(t("alert_no_semaphore", newEvent.semaphore));
                 }
                 else {
                     if (this.WaitQueueS[newEvent.semaphore].length > 0) {
@@ -177,7 +177,7 @@ export class SchedulerManager {
             else if (newEvent.type === 'W') {
                 if (newEvent.semaphore < 0 || newEvent.semaphore > 4) {
                     console.log("Semaphore " + newEvent.semaphore + " does not exist.");
-                    this.triggerAlert("Semaphore " + newEvent.semaphore + " does not exist.");
+                    this.triggerAlert(t("alert_no_semaphore", newEvent.semaphore));
                 }
                 else {
                     // Only process W event if a job is actually running
@@ -274,7 +274,7 @@ export class SchedulerManager {
                     .filter(node => node.type === 'job')
                     .map(node => "Job " + node.id)
                     .join(", ");
-                this.triggerAlert("Cảnh báo: Phát hiện bế tắc (Deadlock) giữa các tiến trình: " + jobList);
+                this.triggerAlert(t("alert_deadlock", jobList));
                 newDeadlockInfo.time = this.CurrentTime;
             } else if (newDeadlockInfo.deadlocked && this.DeadlockInfo.deadlocked) {
                 newDeadlockInfo.time = this.DeadlockInfo.time;
