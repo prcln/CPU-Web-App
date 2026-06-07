@@ -283,7 +283,7 @@ class Simulator extends Component {
         <div className="container">
           <div className="column-divider column-A1">
             <div className="LargeTable">
-              <h2 className="fixed-small"><center>Incoming External Events</center></h2>
+              <h2 className="fixed-small"><center>{t("incoming_external_events")}</center></h2>
               <EventQueue data={manager.EventListOBJ} />
             </div>
           </div>
@@ -334,7 +334,7 @@ class Simulator extends Component {
         <div className="container">
           <div className="column-divider column-A1">
             <div className="LargeTable">
-              <h2 className="fixed-small"><center>Incoming External Events</center></h2>
+              <h2 className="fixed-small"><center>{t("incoming_external_events")}</center></h2>
               <EventQueue data={manager.EventListOBJ} />
             </div>
           </div>

@@ -6,67 +6,7 @@ import { t } from "../../../language/i18n";
 // import Toggle from "./Toggle";
 import { HandleToggle } from './Toggle';
 
-import { Slider, Handles } from 'react-compound-slider'
 
-// import { Handle } from './slidercomps';
-
-// import SchedulerManager from "../implementation/SchedulerManager";
-
-const sliderStyle = {  // Give the slider some width
-    position: 'relative',
-    width: '100%',
-    height: 40,
-    // marginTop: -15,
-    // border: '1px solid steelblue',
-}
-
-const railStyle = {
-    position: 'absolute',
-    width: '100%',
-    // padding: 5,
-    height: 10,
-    marginTop: 20,
-    borderRadius: 5,
-    backgroundColor: '#8B9CB6',
-}
-
-export function Handle({ // your handle component
-    handle: { id, value, percent },
-    getHandleProps
-}) {
-    return (
-        <div
-            style={{
-                left: `${percent}%`,
-                position: 'absolute',
-                marginLeft: -15,
-                marginTop: 10,
-                zIndex: 2,
-                width: 30,
-                height: 30,
-                border: 0,
-                textAlign: 'center',
-                cursor: 'pointer',
-                borderRadius: '50%',
-                backgroundColor: '#2C4870',
-                color: '#333',
-            }}
-            {...getHandleProps(id)}
-        >
-            {/* <div className="handle"> {value} </div> */}
-            {/* <form onSubmit={handleSubmit}>
-
-            <input className="handle" type="number" 
-                value={value} onChange={onChange} />
-
-        </form> */}
-            {/* <CurrentTimeForm time={value} onChange={onChange}/>  */}
-            {/* <div style={{ fontFamily: 'Roboto', fontSize: 11, marginTop: -35 }}>
-          {value}
-        </div> */}
-        </div>
-    )
-}
 
 
 
@@ -163,8 +103,8 @@ class SimHeader extends Component {
         this.props.nextEvent();
     }
 
-    SliderUpdatedTime(timeArr) {
-        var time = timeArr[0];
+    SliderUpdatedTime(e) {
+        var time = parseInt(e.target.value, 10);
         this.setState(prevState => ({
             sliderValue: time,
             isDragging: true,
@@ -173,8 +113,9 @@ class SimHeader extends Component {
         this.TimeForm.UpdateTime(time);
     }
 
-    SliderChangedTime(timeArr) {
-        var time = timeArr[0];
+    SliderChangedTime(e) {
+        var time = this.state.sliderValue;
+        if (time === undefined) return;
         if (time < 0) {
             time = this.time === 0 ? 1 : 0;
         }
@@ -312,30 +253,19 @@ class SimHeader extends Component {
                 </button> */}
                     </div>
 
-                    <div className="header-column-eight">
+                    <div className="header-column-eight" style={{ padding: '0 20px', display: 'flex', alignItems: 'center' }}>
 
-                        <Slider rootStyle={sliderStyle}
-                            domain={this.state.isDragging && this.state.dragDomain ? this.state.dragDomain : [this.time - 250, this.time + 250]}
-                            values={[this.state.sliderValue !== undefined ? this.state.sliderValue : this.time]} step={1} mode={2}
-                            onChange={this.SliderChangedTime}
-                            onUpdate={this.SliderUpdatedTime} >
-                            <div style={railStyle} />
-                            <Handles>
-                                {({ handles, getHandleProps }) => (
-                                    <div className="handle">
-                                        {handles.map(handle => (
-                                            <div className="handle" key={handle.id}>
-                                                <Handle
-                                                    key={handle.id}
-                                                    handle={handle}
-                                                    getHandleProps={getHandleProps}
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </Handles>
-                        </Slider>
+                        <input 
+                            type="range" 
+                            style={{ width: '100%', cursor: 'pointer', accentColor: '#2C4870' }}
+                            min={this.state.isDragging && this.state.dragDomain ? this.state.dragDomain[0] : (this.time - 250)}
+                            max={this.state.isDragging && this.state.dragDomain ? this.state.dragDomain[1] : (this.time + 250)}
+                            value={this.state.sliderValue !== undefined ? this.state.sliderValue : this.time}
+                            step="1"
+                            onChange={this.SliderUpdatedTime}
+                            onMouseUp={this.SliderChangedTime}
+                            onTouchEnd={this.SliderChangedTime}
+                        />
 
                     </div>
 

@@ -37,6 +37,7 @@ const translations = {
     "cpu_memory": "Memory: {0}",
     "cpu_runtime": "Runtime: {0}",
     "cpu_quantum": "Quantum: {0}",
+    "incoming_external_events": "Incoming External Events",
 
     // Queues
     "q_rejected": "Jobs Rejected by System",
@@ -157,7 +158,7 @@ const translations = {
     "btn_settings": "Cài đặt Hệ thống",
     "btn_reset": "Đặt lại Dữ liệu",
     "btn_finish": "Chạy tới Cuối",
-    "btn_complete": "Hoàn tất Mô phỏng",
+    "btn_complete": "Kết thúc MP",
     "lbl_simulation_time": "  Thời gian Mô phỏng  ",
     "btn_delay": "Độ trễ (ms)",
     "lbl_available_memory": "Bộ nhớ Trống: {0}",
@@ -169,6 +170,7 @@ const translations = {
     "cpu_memory": "Bộ nhớ: {0}",
     "cpu_runtime": "Đã chạy: {0}",
     "cpu_quantum": "Lượng tử: {0}",
+    "incoming_external_events": "Sự Kiện Bên Ngoài",
 
     // Queues
     "q_rejected": "Tiến trình Bị từ chối",
